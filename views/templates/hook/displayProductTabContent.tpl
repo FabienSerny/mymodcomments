@@ -1,11 +1,12 @@
-<h3 class="page-product-heading">Product Comments</h3>
+<h3 class="page-product-heading" id="mymodcomments-content-tab"{if isset($new_comment_posted)} data-scroll="true"{/if}>{l s='Product Comments' mod='mymodcomments'}</h3>
 
 <div class="rte">
 {foreach from=$comments item=comment}
-	<p>
-		<strong>Comment #{$comment.id_mymod_comment}:</strong> {$comment.comment}<br>
-		<strong>Grade:</strong> {$comment.grade}/5<br>
-    </p><br>
+	<div class="mymodcomments-comment">
+		<div class="star-rating"><i class="glyphicon glyphicon-star"></i> <strong>Grade:</strong></div> <input value="{$comment.grade}" type="number" class="rating" min="0" max="5" step="1" data-size="xs" />
+		<div><i class="glyphicon glyphicon-comment"></i> <strong>Comment #{$comment.id_mymod_comment}:</strong> {$comment.comment}</div>
+	</div>
+    <hr />
 {/foreach}
 </div>
 
@@ -16,15 +17,8 @@
             <div class="form-group">
                 <label for="grade">Grade:</label>
                 <div class="row">
-                    <div class="col-xs-4">
-                        <select id="grade" class="form-control" name="grade">
-                            <option value="0">-- Choose --</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                    <div class="col-xs-4" id="grade-tab">
+						<input id="grade" name="grade" value="0" type="number" class="rating" min="0" max="5" step="1" data-size="sm" >
 				    </div>
 			    </div>
 		    </div>

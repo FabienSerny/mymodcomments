@@ -1,0 +1,41 @@
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('../fonts/glyphicons-halflings-regular.eot');
+    src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.glyphicon-comment:before {
+    content: "\e111";
+}
+
+.glyphicon-star:before {
+    content: "\e006";
+}
+
+#grade-tab {
+    line-height: 35px;
+}
+
+.mymodcomments-comment .caption {
+    display: none;
+}
+
+.mymodcomments-comment .star-rating {
+    display: inline-block;
+}
+
+.mymodcomments-comment .rating-xs {
+    font-size: 1em;
+}
