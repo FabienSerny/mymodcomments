@@ -3,8 +3,8 @@
 <div class="rte">
 {foreach from=$comments item=comment}
 	<div class="mymodcomments-comment">
-		<div class="star-rating"><i class="glyphicon glyphicon-star"></i> <strong>Grade:</strong></div> <input value="{$comment.grade}" type="number" class="rating" min="0" max="5" step="1" data-size="xs" />
-		<div><i class="glyphicon glyphicon-comment"></i> <strong>Comment #{$comment.id_mymod_comment}:</strong> {$comment.comment}</div>
+		<div class="star-rating"><i class="glyphicon glyphicon-star"></i> <strong>{l s='Grade:' mod='mymodcomments'}</strong></div> <input value="{$comment.grade}" type="number" class="rating" min="0" max="5" step="1" data-size="xs" />
+		<div><i class="glyphicon glyphicon-comment"></i> <strong>{l s='Comment' mod='mymodcomments'} #{$comment.id_mymod_comment}:</strong> {$comment.comment}</div>
 	</div>
     <hr />
 {/foreach}
@@ -15,7 +15,7 @@
 	<form action="" method="POST" id="comment-form">
         {if $enable_grades eq 1}
             <div class="form-group">
-                <label for="grade">Grade:</label>
+                <label for="grade">{l s='Grade:' mod='mymodcomments'}</label>
                 <div class="row">
                     <div class="col-xs-4" id="grade-tab">
 						<input id="grade" name="grade" value="0" type="number" class="rating" min="0" max="5" step="1" data-size="sm" >
@@ -25,12 +25,12 @@
         {/if}
         {if $enable_comments eq 1}
     		<div class="form-group">
-	    		<label for="comment">Comment:</label>
+	    		<label for="comment">{l s='Comment:' mod='mymodcomments'}</label>
 		    	<textarea name="comment" id="comment" class="form-control"></textarea>
 		    </div>
         {/if}
 		<div class="submit">
-			<button type="submit" name="mymod_pc_submit_comment" class="button btn btn-default button-medium"><span>Send<i class="icon-chevron-right right"></i></span></button>
+			<button type="submit" name="mymod_pc_submit_comment" class="button btn btn-default button-medium"><span>{l s='Send' mod='mymodcomments'}<i class="icon-chevron-right right"></i></span></button>
 		</div>
 	</form>
 </div>
