@@ -39,3 +39,7 @@
 .mymodcomments-comment .rating-xs {
     font-size: 1em;
 }
+
+.mymodcomments-avatar {
+    margin-right: 5px;
+}

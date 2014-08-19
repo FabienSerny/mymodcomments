@@ -3,6 +3,8 @@
 <div class="rte">
 {foreach from=$comments item=comment}
 	<div class="mymodcomments-comment">
+		<img src="http://www.gravatar.com/avatar/{$comment.email|trim|strtolower|md5}?s=45" class="pull-left img-thumbnail mymodcomments-avatar" />
+		<p>{$comment.firstname} {$comment.lastname|substr:0:1}.</p>
 		<div class="star-rating"><i class="glyphicon glyphicon-star"></i> <strong>{l s='Grade:' mod='mymodcomments'}</strong></div> <input value="{$comment.grade}" type="number" class="rating" min="0" max="5" step="1" data-size="xs" />
 		<div><i class="glyphicon glyphicon-comment"></i> <strong>{l s='Comment' mod='mymodcomments'} #{$comment.id_mymod_comment}:</strong> {$comment.comment}</div>
 	</div>
@@ -13,6 +15,26 @@
 {if $enable_grades eq 1 OR $enable_comments eq 1}
 <div class="rte">
 	<form action="" method="POST" id="comment-form">
+
+		<div class="form-group">
+			<label for="firstname">{l s='Firstname:' mod='mymodcomments'}</label>
+			<div class="row"><div class="col-xs-4">
+                <input type=”text” name="firstname" id="firstname" class="form-control" />
+            </div></div>
+        </div>
+		<div class="form-group">
+            <label for="lastname">{l s='Lastname:' mod='mymodcomments'}</label>
+			<div class="row"><div class="col-xs-4">
+                <input type=”text” name="lastname" id="lastname" class="form-control" />
+            </div></div>
+        </div>
+		<div class="form-group">
+            <label for="email">{l s='Email:' mod='mymodcomments'}</label>
+			<div class="row"><div class="col-xs-4">
+				<input type=”email” name="email" id="email" class="form-control" />
+			</div></div>
+        </div>
+
         {if $enable_grades eq 1}
             <div class="form-group">
                 <label for="grade">{l s='Grade:' mod='mymodcomments'}</label>
