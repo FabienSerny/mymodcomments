@@ -4,7 +4,7 @@
 {foreach from=$comments item=comment}
 	<div class="mymodcomments-comment">
 		<img src="http://www.gravatar.com/avatar/{$comment.email|trim|strtolower|md5}?s=45" class="pull-left img-thumbnail mymodcomments-avatar" />
-		<p>{$comment.firstname} {$comment.lastname|substr:0:1}.</p>
+		<div>{$comment.firstname} {$comment.lastname|substr:0:1}. <small>{$comment.date_add|substr:0:10}</small></div>
 		<div class="star-rating"><i class="glyphicon glyphicon-star"></i> <strong>{l s='Grade:' mod='mymodcomments'}</strong></div> <input value="{$comment.grade}" type="number" class="rating" min="0" max="5" step="1" data-size="xs" />
 		<div><i class="glyphicon glyphicon-comment"></i> <strong>{l s='Comment' mod='mymodcomments'} #{$comment.id_mymod_comment}:</strong> {$comment.comment}</div>
 	</div>
@@ -12,8 +12,25 @@
 {/foreach}
 </div>
 
+<div class="rte">
+    {assign var=params value=[
+        'module_action' => 'list',
+        'product_rewrite' => $product->link_rewrite,
+        'id_product'=> $smarty.get.id_product,
+        'page' => 1
+    ]}
+	<a href="{$link->getModuleLink('mymodcomments', 'comments', $params)}">{l s='See all comments' mod='mymodcomments'}</a>
+</div>
+
 {if $enable_grades eq 1 OR $enable_comments eq 1}
 <div class="rte">
+
+    {if isset($new_comment_posted) && $new_comment_posted eq 'error'}
+		<div class="alert alert-danger">
+			<p>{l s='Some fields of the form seems wrong, please check them before submitting your comment.' mod='mymodcomments'}</p>
+		</div>
+    {/if}
+
 	<form action="" method="POST" id="comment-form">
 
 		<div class="form-group">
