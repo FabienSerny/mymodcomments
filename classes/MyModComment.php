@@ -4,6 +4,7 @@ class MyModComment extends ObjectModel
 {
 	public $id_mymod_comment;
 	public $id_product;
+	public $product_name;
 	public $firstname;
 	public $lastname;
 	public $email;
@@ -27,6 +28,12 @@ class MyModComment extends ObjectModel
 		),
 	);
 
+	public function loadProductName()
+	{
+		$product = new Product($this->id_product, true, Context::getContext()->cookie->id_lang);
+		$this->product_name = $product->name;
+	}
+
 	public static function getProductNbComments($id_product)
 	{
 		$nb_comments = Db::getInstance()->getValue('
@@ -39,12 +46,44 @@ class MyModComment extends ObjectModel
 
 	public static function getProductComments($id_product, $limit_start, $limit_end = false)
 	{
-		$limit = (int)$limit_start; if ($limit_end)
-		$limit = (int)$limit_start.','.(int)$limit_end;
+		$limit = (int)$limit_start;
+		if ($limit_end)
+			$limit = (int)$limit_start.','.(int)$limit_end;
+
 		$comments = Db::getInstance()->executeS('
 		SELECT * FROM `'._DB_PREFIX_.'mymod_comment`
 		WHERE `id_product` = '.(int)$id_product.'
 		ORDER BY `date_add` DESC
+		LIMIT '.$limit);
+
+		return $comments;
+	}
+
+	public static function getCustomerNbComments($email)
+	{
+		$nb_comments = Db::getInstance()->getValue('
+		SELECT COUNT(`id_product`)
+		FROM `'._DB_PREFIX_.'mymod_comment`
+		WHERE `email` = \''.pSQL($email).'\'');
+
+		return $nb_comments;
+	}
+
+	public static function getCustomerComments($email, $limit_start, $limit_end = false)
+	{
+		$limit = (int)$limit_start;
+		if ($limit_end)
+			$limit = (int)$limit_start.','.(int)$limit_end;
+
+		$comments = Db::getInstance()->executeS('
+		SELECT pc.*, pl.`name` as product_name
+		FROM `'._DB_PREFIX_.'mymod_comment` pc
+		LEFT JOIN `'._DB_PREFIX_.'product_lang` pl ON (
+			pl.`id_product` = pc.`id_product` AND
+			pl.`id_lang` = '.(int)Context::getContext()->language->id.'
+		)
+		WHERE pc.`email` = \''.pSQL($email).'\'
+		ORDER BY pc.`date_add` DESC
 		LIMIT '.$limit);
 
 		return $comments;
