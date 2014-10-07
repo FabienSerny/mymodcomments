@@ -6,7 +6,8 @@ class MyModCommentsDisplayProductTabContentController
 	{
 		$this->file = $file;
 		$this->module = $module;
-		$this->context = Context::getContext(); $this->_path = $path;
+		$this->context = Context::getContext();
+		$this->_path = $path;
 	}
 
 	public function processProductTabContent()
@@ -27,6 +28,7 @@ class MyModCommentsDisplayProductTabContentController
 			}
 
 			$MyModComment = new MyModComment();
+			$MyModComment->id_shop = (int)$this->context->shop->id;
 			$MyModComment->id_product = (int)$id_product;
 			$MyModComment->firstname = $firstname;
 			$MyModComment->lastname = $lastname;

@@ -8,7 +8,7 @@ class MyModComments extends Module
 	{
 		$this->name = 'mymodcomments';
 		$this->tab = 'front_office_features';
-		$this->version = '0.3';
+		$this->version = '0.4';
 		$this->author = 'Fabien Serny';
 		$this->bootstrap = true;
 		parent::__construct();
