@@ -189,4 +189,14 @@ class MyModComments extends Module
 		$controller = $this->getHookController('getContent');
 		return $controller->run();
 	}
+
+	public function smartyGetCacheId($name = null)
+	{
+		return $this->getCacheId($name);
+	}
+
+	public function smartyClearCache($template, $cache_id = null, $compile_id = null)
+	{
+		return $this->_clearCache($template, $cache_id, $compile_id);
+	}
 }

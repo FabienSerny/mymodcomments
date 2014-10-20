@@ -8,6 +8,7 @@ class MyModCommentsDisplayProductTabContentController
 		$this->module = $module;
 		$this->context = Context::getContext();
 		$this->_path = $path;
+		$this->cache_id = $this->module->smartyGetCacheId($this->module->name.(int)Tools::getValue('id_product'));
 	}
 
 	public function processProductTabContent()
@@ -38,6 +39,8 @@ class MyModCommentsDisplayProductTabContentController
 			$MyModComment->add();
 
 			$this->context->smarty->assign('new_comment_posted', 'success');
+
+			$this->module->smartyClearCache('displayProductTabContent.tpl', $this->cache_id);
 		}
 	}
 
@@ -46,26 +49,29 @@ class MyModCommentsDisplayProductTabContentController
 		$enable_grades = Configuration::get('MYMOD_GRADES');
 		$enable_comments = Configuration::get('MYMOD_COMMENTS');
 
-		$id_product = Tools::getValue('id_product');
-		$comments = MyModComment::getProductComments($id_product, 0, 3);
-		$product = new Product((int)$id_product, false, $this->context->cookie->id_lang);
-
 		$this->context->controller->addCSS($this->_path.'views/css/star-rating.css', 'all');
 		$this->context->controller->addJS($this->_path.'views/js/star-rating.js');
 
 		$this->context->controller->addCSS($this->_path.'views/css/mymodcomments.css', 'all');
 		$this->context->controller->addJS($this->_path.'views/js/mymodcomments.js');
 
-		$this->context->smarty->assign('enable_grades', $enable_grades);
-		$this->context->smarty->assign('enable_comments', $enable_comments);
-		$this->context->smarty->assign('comments', $comments);
-		$this->context->smarty->assign('product', $product);
+		if (!$this->module->isCached('displayProductTabContent.tpl', $this->cache_id))
+		{
+			$id_product = Tools::getValue('id_product');
+			$comments = MyModComment::getProductComments($id_product, 0, 3);
+			$product = new Product((int)$id_product, false, $this->context->cookie->id_lang);
+
+			$this->context->smarty->assign('enable_grades', $enable_grades);
+			$this->context->smarty->assign('enable_comments', $enable_comments);
+			$this->context->smarty->assign('comments', $comments);
+			$this->context->smarty->assign('product', $product);
+		}
 	}
 
 	public function run($params)
 	{
 		$this->processProductTabContent();
 		$this->assignProductTabContent();
-		return $this->module->display($this->file, 'displayProductTabContent.tpl');
+		return $this->module->display($this->file, 'displayProductTabContent.tpl', $this->cache_id);
 	}
 }
