@@ -32,10 +32,11 @@ class MyModComments extends Module
 			return false;
 
 		// Register hooks
-		if (!$this->registerHook('displayProductTabContent') ||
+		if (!$this->registerHook('displayFooterProduct') ||
 			!$this->registerHook('displayBackOfficeHeader') ||
 			!$this->registerHook('displayAdminProductsExtra') ||
 			!$this->registerHook('displayAdminCustomers') ||
+			!$this->registerHook('displayHeader') ||
 			!$this->registerHook('ModuleRoutes'))
 			return false;
 
@@ -46,6 +47,17 @@ class MyModComments extends Module
 		// All went well!
 		return true;
 	}
+
+	public function hookDisplayHeader($params)
+	{
+		if (Tools::getValue('id_product') > 0) {
+			$this->context->controller->addCSS($this->_path.'views/css/star-rating.css', 'all');
+			$this->context->controller->addJS($this->_path.'views/js/star-rating.js');
+			$this->context->controller->addCSS($this->_path.'views/css/mymodcomments.css', 'all');
+			$this->context->controller->addJS($this->_path.'views/js/mymodcomments.js');
+		}
+	}
+
 
 	public function uninstall()
 	{
@@ -146,9 +158,9 @@ class MyModComments extends Module
 		return $controller;
 	}
 
-	public function hookDisplayProductTabContent($params)
+	public function hookDisplayFooterProduct($params)
 	{
-		$controller = $this->getHookController('displayProductTabContent');
+		$controller = $this->getHookController('displayFooterProduct');
 		return $controller->run($params);
 	}
 

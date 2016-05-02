@@ -1,6 +1,6 @@
 <?php
 
-class MyModCommentsDisplayProductTabContentController
+class MyModCommentsDisplayFooterProductController
 {
 	public function __construct($module, $file, $path)
 	{
